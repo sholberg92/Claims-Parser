@@ -1,0 +1,39 @@
+<head>
+	
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+          crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	<script src="/patenttools.js"></script>
+</head>
+
+<html lang="en">
+
+	
+	<body ng-app="patentapp">
+		<div ng-controller = "PatentController">
+
+		
+			<div class="form-group form-inline">
+				<input type="text" class="form-control" ng-model="patentNum" placeholder="7480604">
+				<button type="button" class="btn btn-default" ng-click="fetchClaims(patentNum)">Fetch</button>
+			</div>
+			
+			<input type="file" ng-model="file.data" ng-file-select="onFileSelect($files)">
+			{{contents}}
+		
+		
+		
+		
+		
+		</div> <!-- ng-controller -->
+	
+	
+	</body>
+
+
+
+
+</html>
