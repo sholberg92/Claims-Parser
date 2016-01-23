@@ -46,14 +46,7 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 
 	}
 
-	var claimsAry = [];
-	claimsAry.push({});
-	var numClaims = 0;
-	var indClaims = 0;
-	var methodClaims = 0;
-	var mfClaims = 0;
-	var appClaims = 0;
-	var dependingClaim = 0;
+
 	
 	function generateTree(claims) {
 		//console.log("test");
@@ -84,6 +77,15 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 	
 	
 	function parseClaims(claims) {
+		var claimsAry = [];
+		claimsAry.push({});
+		var numClaims = 0;
+		var indClaims = 0;
+		var methodClaims = 0;
+		var mfClaims = 0;
+		var appClaims = 0;
+		var dependingClaim = 0;
+		
 		for(var i = 0; i < claims.length; i++) {
 			var cnum = parseInt(claims[i].toString().trim().substring(0, 10));
 			if(!isNaN(cnum)) {
