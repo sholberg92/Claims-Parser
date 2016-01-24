@@ -6,6 +6,7 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 	var xhttp = new XMLHttpRequest();
 	$scope.patentLink = 'http://www.freepatentsonline.com/';
 	$scope.patentNum = '7480604';
+	$scope.showGraph = false;
 	var requestPatents = function(patentNums) {
 		var parseHTML = function(html, num) {
 			var el = document.createElement('html');
@@ -126,8 +127,8 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 			
 		}
 		
-		result += "Independent: " + indClaims + '\n';
 		result += "# Claims: " + numClaims + '\n';
+		result += "Independent: " + indClaims + '\n';		
 		result += "Apparatus : " + appClaims + '\n';
 		result += "Method: " + methodClaims + '\n';
 		result += "Means+Function: " + mfClaims + '\n';

@@ -23,7 +23,7 @@
 							<div class="form-group form-inline">
 								
 								<input type="text" class="form-control" ng-model="patentNum" placeholder="7480604">
-								<button type="button" class="btn btn-default" ng-click="fetchClaims(patentNum)">Fetch</button>
+								<button type="button" class="btn btn-default" ng-click="fetchClaims(patentNum); showGraph = !showGraph">Fetch</button>
 							</div>
 							
 							<span class="btn btn-default btn-file">
@@ -34,7 +34,11 @@
 							{{contents}}						
 						</div>
 						<div id="patGraphContent" class="p-content col-md-6">
-							<p ng-model="patGraph">{{patGraph}}</p>
+							<div ng-show="showGraph">
+								<p>Patent #: {{patentNum}}</p>
+								<p ng-model="patGraph">{{patGraph}}</p>
+							</div>
+							
 						
 						</div>						
 	

@@ -20,11 +20,13 @@
 
 .p-content {
 	
-	white-space: pre-wrap;
+	padding: 25px;
 	border-radius: 25px;
 	border: 2px solid #73AD21;
 }
 
 #patGraphContent p {
+	white-space: pre-wrap;
 	font-size: 100%;
+	margin-bottom: 0px;
 }
