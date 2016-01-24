@@ -18,19 +18,15 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 				}
 				
 			}
-
-			//console.log(claims.split(/\n/));
-			
+	
 			parseClaims(claims.split(/\n/));
 		}		
 		
 		var patAjax = function(number) {
 			var reqStr = $scope.patentLink + number + '.html';
-			//reqStr = "https://patents.google.com/patent/US" + patentNums[i] + "/en";
 			$http.post('/patFetch', {num: number})
 				.success(function(response) {
 					parseHTML(response.html);
-					//console.log(response.html);
 				});
 		
 		};
@@ -48,17 +44,16 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 
 
 	
-	function generateTree(claims) {
-		//console.log("test");
+	function generateTree(claims, result, callback) {
 		var find = function(i, j, count, pos) {
 			for(var i = 1; i < count; i++) {
 				if(claims[i].dependingOn == j) {
 					if(i == j) {
-						console.log("claim(" + i + ")");
+						result += "claim(" + i + ")" + '\n';
 					} else {
 						var str = '';
 						str = Array(pos+1).join('\t') + "+---claim(" + i + ")";
-						console.log(str);
+						result += str + '\n';
 						claims[i].dependingOn = 0;
 					}
 					if(i != j) {
@@ -73,10 +68,12 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 		for(var i = 1; i < claims.length; i++) {
 			find(1, i, claims.length, 1);
 		}
+		callback(result);
 	};
 	
 	
 	function parseClaims(claims) {
+		var result = '';
 		var claimsAry = [];
 		claimsAry.push({});
 		var numClaims = 0;
@@ -124,13 +121,25 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 			
 			
 		}
-		generateTree(claimsAry);
 		
-		console.log("Independent: " + indClaims);
-		console.log("# Claims: " + numClaims);
-		console.log("Apparatus : " + appClaims);
-		console.log("Method: " + methodClaims);
-		console.log("Means+Function: " + mfClaims);
+		result += "Independent: " + indClaims + '\n';
+		result += "# Claims: " + numClaims + '\n';
+		result += "Apparatus : " + appClaims + '\n';
+		result += "Method: " + methodClaims + '\n';
+		result += "Means+Function: " + mfClaims + '\n';
+		generateTree(claimsAry, result, function(result) {
+			$scope.patGraph = result;
+			// $http.post('/writeFile', {file: result}) 
+				// .success(function(response) {
+					
+					// console.log(response);
+				// });
+						
+			//console.log(result);
+		});
+
+
+
 	};
 		
 	$scope.fetchClaims = function(number) {

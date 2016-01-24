@@ -1,9 +1,11 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var bodyParser = require('body-parser');
+var path = require('path');
+var fs = require('fs');
 var express     = require('express');
 var app         = express();
-
+app.use(express.static(__dirname));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 var port = process.env.PORT || 8080; 
@@ -26,6 +28,19 @@ app.post('/patFetch', function(req, res) {
 		
 		}
 	});
+	
+});
+
+app.post('/writeFile', function(req, res) {
+	fs.writeFile("./test.txt", req.body.file, function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log("File saved");
+			res.sendFile(path.join(__dirname, 'test.txt'));			
+		}
+	});
+	
 	
 });
 
