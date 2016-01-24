@@ -1,11 +1,8 @@
-
-var app = angular.module("patentapp", []);
-
-app.controller("PatentController", ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+app.controller("PatentController", ['$scope', '$timeout', '$http', 'patentService', function($scope, $timeout, $http, patentService) {
 	$scope.contents = "No File Loaded";
 	var xhttp = new XMLHttpRequest();
 	$scope.patentLink = 'http://www.freepatentsonline.com/';
-	$scope.patentNum = '7480604';
+	
 	$scope.showGraph = false;
 	var requestPatents = function(patentNums) {
 		var parseHTML = function(html, num) {
@@ -24,12 +21,9 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 		}		
 		
 		var patAjax = function(number) {
-			var reqStr = $scope.patentLink + number + '.html';
-			$http.post('/patFetch', {num: number})
-				.success(function(response) {
-					parseHTML(response.html);
-				});
-		
+			patentService.patFetch(number, function(response) {
+				parseHTML(response.html);
+			});		
 		};
 		
 		if(Array.isArray(patentNums)) {
@@ -133,14 +127,8 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 		result += "Method: " + methodClaims + '\n';
 		result += "Means+Function: " + mfClaims + '\n';
 		generateTree(claimsAry, result, function(result) {
+			$scope.patentNum = $scope.inputPat;
 			$scope.patGraph = result;
-			// $http.post('/writeFile', {file: result}) 
-				// .success(function(response) {
-					
-					// console.log(response);
-				// });
-						
-			//console.log(result);
 		});
 
 
@@ -152,7 +140,8 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 	};	
 	
 	$scope.getFile = function() {
-		
+		$scope.patGraph = "";
+		$scope.patentNum = "Unknown";
 		var reader = new FileReader();
 		reader.onloadend = function() {
 			var claims = reader.result.split(/[\r\n]+/g);
