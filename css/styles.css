@@ -19,7 +19,12 @@
 }
 
 .p-content {
+	
 	white-space: pre-wrap;
 	border-radius: 25px;
 	border: 2px solid #73AD21;
+}
+
+#patGraphContent p {
+	font-size: 100%;
 }
