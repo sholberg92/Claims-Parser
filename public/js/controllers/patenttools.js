@@ -140,8 +140,7 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', 'patentServic
 	};	
 	
 	$scope.getFile = function() {
-		$scope.patGraph = "";
-		$scope.patentNum = "Unknown";
+
 		var reader = new FileReader();
 		reader.onloadend = function() {
 			var claims = reader.result.split(/[\r\n]+/g);
