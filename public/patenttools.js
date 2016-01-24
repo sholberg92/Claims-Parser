@@ -84,8 +84,12 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', function($sco
 		var dependingClaim = 0;
 		
 		for(var i = 0; i < claims.length; i++) {
-			var cnum = parseInt(claims[i].toString().trim().substring(0, 10));
-			if(!isNaN(cnum)) {
+			var cnum = undefined;
+			if(claims[i].toString().trim().substring(0, 10).match(/\d+\./) != null) {
+				cnum = parseInt(claims[i].toString().trim().substring(0, 10).match(/\d+\./)[0]);
+			}
+			
+			if(!isNaN(cnum) && cnum != undefined) {
 				
 				
 				dependingClaim = cnum;
