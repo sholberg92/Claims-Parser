@@ -127,7 +127,7 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', 'patentServic
 		result += "Method: " + methodClaims + '\n';
 		result += "Means+Function: " + mfClaims + '\n';
 		generateTree(claimsAry, result, function(result) {
-			$scope.patentNum = $scope.inputPat;
+			
 			$scope.patGraph = result;
 		});
 
@@ -136,16 +136,18 @@ app.controller("PatentController", ['$scope', '$timeout', '$http', 'patentServic
 	};
 		
 	$scope.fetchClaims = function(number) {
+		$scope.patentNum = $scope.inputPat;
 		requestPatents(number);
 	};	
+
 	
 	$scope.getFile = function() {
-		$scope.patGraph = "";
-		$scope.patentNum = "Unknown";
+		console.log("reading file");
 		var reader = new FileReader();
 		reader.onloadend = function() {
 			var claims = reader.result.split(/[\r\n]+/g);
-			
+			$scope.patGraph = "";
+			$scope.patentNum = "Unknown";			
 			parseClaims(claims);
 
 			$scope.contents = "File loaded";
